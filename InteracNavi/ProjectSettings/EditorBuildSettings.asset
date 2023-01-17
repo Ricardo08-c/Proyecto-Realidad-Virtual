@@ -9,7 +9,7 @@ EditorBuildSettings:
     path: Assets/Scenes/NuevoMenu.unity
     guid: ea7a852e58c754aee8240cb72f5d84e1
   - enabled: 1
-    path: Assets/Scenes/MoverObjetosMosca.unity
+    path: Assets/Scenes/MoverObjetos.unity
     guid: fc63948cb7d964d41a0ab55d0fd5a878
   - enabled: 1
     path: Assets/Scenes/AcercaDe.unity
