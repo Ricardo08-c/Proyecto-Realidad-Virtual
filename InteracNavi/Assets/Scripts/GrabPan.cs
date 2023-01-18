@@ -2,17 +2,30 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GrabObject2 : MonoBehaviour
+public class GrabPan : MonoBehaviour
 {
     public GameObject _objetoGrabed;
     public GameObject _jugador;
+    [SerializeField] AudioSource sourceEarth;
+    [SerializeField] AudioSource sourceAir;
+    [SerializeField] AudioSource wrongAudio;
+    [SerializeField] AudioSource correctAudio;
+
     // Start is called before the first frame update
     private void OnTriggerEnter(Collider other)
     {
         
-        if (other.gameObject.tag == "Grab")
+        
+        if (other.gameObject.tag == "GrabNotGaze")
         {
-            
+            if (other.gameObject.name == "pan1") {
+                sourceAir.Play();
+            }
+            if (other.gameObject.name == "pan2")
+            {
+                sourceEarth.Play();
+
+            }
             other.gameObject.GetComponent<Rigidbody>().useGravity = false;
             other.gameObject.GetComponent<Rigidbody>().isKinematic = true;
             other.gameObject.transform.SetParent(_jugador.transform,false);
@@ -21,8 +34,12 @@ public class GrabObject2 : MonoBehaviour
         }
 
     
-        if (other.gameObject.tag == "UnGrab" && _objetoGrabed != null)
+        if (other.gameObject.tag == "UngrabNotGaze" && _objetoGrabed != null)
         {
+            if (other.name != _objetoGrabed.name) {
+                wrongAudio.Play();
+                return;
+            }
             
             _objetoGrabed.transform.SetParent(null);
             _objetoGrabed.gameObject.GetComponent<Rigidbody>().useGravity = true;
@@ -30,6 +47,8 @@ public class GrabObject2 : MonoBehaviour
             _objetoGrabed.gameObject.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
             _objetoGrabed.gameObject.transform.position = new Vector3(other.transform.position.x, 1.0f, other.transform.position.z);
             _objetoGrabed.gameObject.transform.rotation = Quaternion.identity;
+            _objetoGrabed = null;
+            correctAudio.Play();
         }
     }
 }
