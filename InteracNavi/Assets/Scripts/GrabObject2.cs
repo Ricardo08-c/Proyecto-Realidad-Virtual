@@ -23,7 +23,7 @@ public class GrabObject2 : MonoBehaviour
     
         if (other.gameObject.tag == "UnGrab" && _objetoGrabed != null)
         {
-            
+            print("Printing");
             _objetoGrabed.transform.SetParent(null);
             _objetoGrabed.gameObject.GetComponent<Rigidbody>().useGravity = true;
             _objetoGrabed.gameObject.GetComponent<Rigidbody>().isKinematic = false;

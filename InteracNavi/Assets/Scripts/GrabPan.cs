@@ -14,10 +14,11 @@ public class GrabPan : MonoBehaviour
     // Start is called before the first frame update
     private void OnTriggerEnter(Collider other)
     {
-        
-        
+
+        print("Inside");
         if (other.gameObject.tag == "GrabNotGaze")
         {
+            print("Grabbed");
             if (other.gameObject.name == "pan1") {
                 sourceAir.Play();
             }
@@ -36,11 +37,9 @@ public class GrabPan : MonoBehaviour
     
         if (other.gameObject.tag == "UngrabNotGaze" && _objetoGrabed != null)
         {
-            if (other.name != _objetoGrabed.name) {
-                wrongAudio.Play();
-                return;
-            }
-            
+            print("InsideNotGaze");
+
+
             _objetoGrabed.transform.SetParent(null);
             _objetoGrabed.gameObject.GetComponent<Rigidbody>().useGravity = true;
             _objetoGrabed.gameObject.GetComponent<Rigidbody>().isKinematic = false;
