@@ -1285,11 +1285,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -4396642182433536433, guid: b8e9b15e3de355641895d04370510e8a,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 210036a56f943b5469841ce326a9f2ff, type: 2}
     - target: {fileID: 919132149155446097, guid: b8e9b15e3de355641895d04370510e8a,
         type: 3}
       propertyPath: m_Name
       value: Boneboi_T
       objectReference: {fileID: 0}
+    - target: {fileID: 3669792126955847883, guid: b8e9b15e3de355641895d04370510e8a,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 1284467dd480c24499dd6b5ad72719f7, type: 2}
+    - target: {fileID: 5163274157245789301, guid: b8e9b15e3de355641895d04370510e8a,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 1284467dd480c24499dd6b5ad72719f7, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b8e9b15e3de355641895d04370510e8a, type: 3}
 --- !u!1001 &141112169
@@ -6545,6 +6560,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pointer: {fileID: 1541081113}
   audioAang: {fileID: 0}
+  objectPiz: {fileID: 0}
+  _attachPoint: {fileID: 0}
 --- !u!1001 &785740122
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6885,11 +6902,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -4396642182433536433, guid: b8e9b15e3de355641895d04370510e8a,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 210036a56f943b5469841ce326a9f2ff, type: 2}
     - target: {fileID: 919132149155446097, guid: b8e9b15e3de355641895d04370510e8a,
         type: 3}
       propertyPath: m_Name
       value: Boneboi_T (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 3669792126955847883, guid: b8e9b15e3de355641895d04370510e8a,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 1284467dd480c24499dd6b5ad72719f7, type: 2}
+    - target: {fileID: 5163274157245789301, guid: b8e9b15e3de355641895d04370510e8a,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 1284467dd480c24499dd6b5ad72719f7, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b8e9b15e3de355641895d04370510e8a, type: 3}
 --- !u!1 &846373061 stripped
@@ -11411,6 +11443,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 83d3524359fbb4a4dbc121ac07e6b44b,
         type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 83d3524359fbb4a4dbc121ac07e6b44b,
+        type: 3}
       propertyPath: m_LocalPosition.x
       value: -25.5
       objectReference: {fileID: 0}
@@ -11473,8 +11510,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: -6478536213147159724, guid: 1fa97a9be0a2b4444bc8df04276d708f,
-        type: 3}
+      objectReference: {fileID: 2100000, guid: 32bfd09bd91403943be77ed686ed13f9, type: 2}
     - target: {fileID: 5601484285250034516, guid: 83d3524359fbb4a4dbc121ac07e6b44b,
         type: 3}
       propertyPath: m_Materials.Array.data[1]
