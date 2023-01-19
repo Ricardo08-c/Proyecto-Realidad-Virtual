@@ -8,18 +8,56 @@ public class CameraPointerManager : MonoBehaviour
 
     [SerializeField] private GameObject pointer;
     [SerializeField] AudioSource audioAang;
+    [SerializeField] GameObject objectPiz;
 
     private readonly string interactableTag = "Interactable";
     private readonly string teleportTag = "Teleporting";
     private readonly string grabTag = "Grab";
     private readonly string ungrabTag = "UnGrab";
-
+    public GameObject _attachPoint;
 
 
 
     private void Start()
     {
+;
+        int size = 15;
+        GameObject duplicate = null;
+        Vector3 position = new Vector3();
+        GameObject original = objectPiz;
+        GameObject originalRow = objectPiz;
         GazeManager.Instance.OnGazeSelection += GazeSelection;
+
+        if (objectPiz == null) {
+            return;
+        }
+        for (int k = 0; k < size; k++) {
+            for (int i = 0; i < size; i++)
+            {
+                duplicate = Instantiate(original);
+
+                duplicate.tag = "Board";
+                position = original.transform.position;
+                position -= original.transform.forward * (original.transform.lossyScale.z / 2 + duplicate.transform.lossyScale.z / 2);
+                duplicate.transform.position = position;
+                original = duplicate;
+
+
+
+
+            }
+            duplicate = Instantiate(original);
+            position = originalRow.transform.position;
+            position.y += originalRow.transform.lossyScale.y / 2;
+            position.y += duplicate.transform.lossyScale.y / 2;
+            duplicate.transform.position = position;
+            original = duplicate;
+            originalRow = duplicate;
+               
+        }
+        
+        
+
     }
 
     private void GazeSelection()
@@ -56,6 +94,42 @@ public class CameraPointerManager : MonoBehaviour
     /// <summary>
     /// Update is called once per frame.
     /// </summary>
+    ///
+    public void pointAtBoard(Transform pos)
+    {
+
+        Transform _detachObject = _attachPoint.transform.GetChild(0);
+        print(_detachObject.gameObject.name);
+        GameObject thrownObject = Instantiate(_detachObject.gameObject, _detachObject.transform.position, transform.rotation);
+
+
+        // Set the triggerPressed variable to false
+
+        
+        
+          GameObject myObject = thrownObject;
+        Rigidbody rigid = thrownObject.GetComponent<Rigidbody>();
+
+
+
+        Vector3 startPos = pos.forward*10;
+
+
+        float x = (startPos).x;
+        float y = (startPos).y;
+        float z = (startPos).z+6;
+        Vector3 endPos = new Vector3(x, y, z);
+
+
+        // Declare the speed of the movement
+
+
+        // Update the object's position using Ve;ctor3.Lerp
+        rigid.transform.position = endPos;
+
+
+
+    }
     public void Update()
     {
         // Casts ray towards camera's forward direction, to detect if a GameObject is being gazed
@@ -80,6 +154,8 @@ public class CameraPointerManager : MonoBehaviour
                     GazeManager.Instance.StartGazeSelection();
                 if (hit.transform.CompareTag(ungrabTag))
                     GazeManager.Instance.StartGazeSelection();
+                
+
             }
         }
         else
@@ -89,7 +165,18 @@ public class CameraPointerManager : MonoBehaviour
             audioAang.Stop();
             _gazedAtObject = null;
         }
-
-
+        if (_gazedAtObject != null && _gazedAtObject.CompareTag("Board")) {
+            if (_attachPoint.transform.childCount == 0) return;
+            Transform _detachObject = _attachPoint.transform.GetChild(0);
+            
+            
+            Material mat = _detachObject.gameObject.GetComponent<Renderer>().material;
+            Renderer renderer = _gazedAtObject.GetComponent<Renderer>();
+            renderer.material=mat; 
+            
+        }
+        
+        
     }
+
 }

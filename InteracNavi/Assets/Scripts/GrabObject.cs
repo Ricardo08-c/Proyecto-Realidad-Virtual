@@ -10,6 +10,7 @@ public class GrabObject : MonoBehaviour
     [SerializeField] AudioSource sourceAir;
     [SerializeField] AudioSource wrongAudio;
     [SerializeField] AudioSource correctAudio;
+    Dictionary<string, Vector3> myDict = new Dictionary<string, Vector3>();
 
     // Start is called before the first frame update
     private void OnTriggerEnter(Collider other)
@@ -26,6 +27,21 @@ public class GrabObject : MonoBehaviour
                 sourceEarth.Play();
 
             }
+            if (this._jugador.transform.childCount > 0)
+
+            {
+                _objetoGrabed.transform.SetParent(null);
+                _objetoGrabed.gameObject.GetComponent<Rigidbody>().useGravity = false;
+                _objetoGrabed.gameObject.GetComponent<Rigidbody>().isKinematic = true;
+                _objetoGrabed.gameObject.transform.localScale = other.transform.localScale;
+                _objetoGrabed.gameObject.transform.position = myDict[_objetoGrabed.name];
+                
+                _objetoGrabed.gameObject.transform.rotation = other.transform.rotation;
+                _objetoGrabed = null;
+            }
+            if(!myDict.ContainsKey(other.gameObject.name))
+                myDict.Add(other.gameObject.name, other.gameObject.transform.position);
+            
             other.gameObject.GetComponent<Rigidbody>().useGravity = false;
             other.gameObject.GetComponent<Rigidbody>().isKinematic = true;
             other.gameObject.transform.SetParent(_jugador.transform,false);

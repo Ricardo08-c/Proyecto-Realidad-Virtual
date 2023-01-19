@@ -25,7 +25,7 @@ public class GrabObjectRay : MonoBehaviour
 
     public void OnGrabRayInteractionAttach()
     {
-          
+        
           this.gameObject.GetComponent<Rigidbody>().useGravity = false;
           this.gameObject.GetComponent<Rigidbody>().isKinematic = true;
           this.gameObject.transform.SetParent(_attachPoint.transform, false);
