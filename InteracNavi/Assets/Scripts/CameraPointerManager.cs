@@ -68,6 +68,16 @@ public class CameraPointerManager : MonoBehaviour
               
         if (_gazedAtObject.name == "AcercaDe")
             _gazedAtObject?.SendMessage("CargarAcercaDe", null, SendMessageOptions.DontRequireReceiver);
+
+        if (_gazedAtObject.name == "Elements")
+            _gazedAtObject?.SendMessage("CargarAvatar", null, SendMessageOptions.DontRequireReceiver);
+
+        if (_gazedAtObject.name == "Paint")
+            _gazedAtObject?.SendMessage("CargarPaint", null, SendMessageOptions.DontRequireReceiver);
+
+        if (_gazedAtObject.name == "Laberinto")
+            _gazedAtObject?.SendMessage("CargarLaberinto", null, SendMessageOptions.DontRequireReceiver);
+
         if (_gazedAtObject.name == "Fin")
             _gazedAtObject?.SendMessage("SalirApp", null, SendMessageOptions.DontRequireReceiver);
         if (_gazedAtObject.name == "Regresar")

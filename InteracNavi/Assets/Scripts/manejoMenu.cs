@@ -15,21 +15,35 @@ public class manejoMenu : MonoBehaviour
 
     public void CargarVRROOM()
     {
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene("MoverObjetos");
     }
-    /*
-    public void CargarPatio()
+
+    public void CargarPaint()
     {
-        SceneManager.LoadScene(3);
-    }*/
+        SceneManager.LoadScene("Paint"); 
+    }
+
+    public void CargarLaberinto()
+    {
+        SceneManager.LoadScene("Laberinto"); 
+    }
+
+    public void CargarAvatar()
+    {
+        SceneManager.LoadScene("MoverObjetosAang"); 
+    }
+
     public void CargarAcercaDe()
     {
-        SceneManager.LoadScene(2); // Carga escena de acerca de
+        SceneManager.LoadScene("AcercaDe"); // Carga escena de acerca de
     }
+
+
+
 
     public void RegresarMenu()
     {
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene("NuevoMenu");
     }
 
     public void SalirApp()
