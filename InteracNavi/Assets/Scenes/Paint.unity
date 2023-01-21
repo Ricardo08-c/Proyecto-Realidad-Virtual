@@ -2271,6 +2271,7 @@ MonoBehaviour:
   audioAang: {fileID: 259501670}
   objectPiz: {fileID: 2095100115}
   _attachPoint: {fileID: 1994964987}
+  correct: {fileID: 190425565}
 --- !u!1 &951310312
 GameObject:
   m_ObjectHideFlags: 0
@@ -5326,6 +5327,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsTrigger
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5319834522941726128, guid: 80d5c27cd0bf4c54ba75647138687c2c,
+        type: 3}
+      propertyPath: timeForSelection
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 5319834522941726129, guid: 80d5c27cd0bf4c54ba75647138687c2c,
         type: 3}
