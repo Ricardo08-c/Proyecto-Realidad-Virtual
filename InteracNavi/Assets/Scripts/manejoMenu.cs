@@ -18,6 +18,10 @@ public class manejoMenu : MonoBehaviour
         SceneManager.LoadScene("MoverObjetos");
     }
 
+    public void OnPointerEnter()
+    {
+    }
+
     public void CargarPaint()
     {
         SceneManager.LoadScene("Paint"); 

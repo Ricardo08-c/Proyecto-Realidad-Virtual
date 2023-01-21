@@ -12,6 +12,7 @@ TagManager:
   - GrabNotGaze
   - UngrabNotGaze
   - Board
+  - Head
   layers:
   - Default
   - TransparentFX

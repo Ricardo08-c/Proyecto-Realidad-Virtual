@@ -15,13 +15,16 @@ public class CameraPointerManager : MonoBehaviour
     private readonly string grabTag = "Grab";
     private readonly string ungrabTag = "UnGrab";
     public GameObject _attachPoint;
-
+    private bool reach = true;
+    [SerializeField] AudioSource correct;
 
 
     private void Start()
     {
-;
-        int size = 15;
+       
+
+        int row = 20;
+        int col = 10;
         GameObject duplicate = null;
         Vector3 position = new Vector3();
         GameObject original = objectPiz;
@@ -31,8 +34,8 @@ public class CameraPointerManager : MonoBehaviour
         if (objectPiz == null) {
             return;
         }
-        for (int k = 0; k < size; k++) {
-            for (int i = 0; i < size; i++)
+        for (int k = 0; k < col; k++) {
+            for (int i = 0; i < row; i++)
             {
                 duplicate = Instantiate(original);
 
@@ -59,6 +62,18 @@ public class CameraPointerManager : MonoBehaviour
         
 
     }
+    private bool comp(string s1, string s2) {
+        int i = 0;
+        foreach (char c in s1) {
+            if (c != s2[i])
+            {
+                print(c+"-"+ s2[i]);
+                return false;
+            }
+            i++;
+        }
+         return true;
+    }
 
     private void GazeSelection()
     {
@@ -82,11 +97,57 @@ public class CameraPointerManager : MonoBehaviour
             _gazedAtObject?.SendMessage("SalirApp", null, SendMessageOptions.DontRequireReceiver);
         if (_gazedAtObject.name == "Regresar")
             SceneManager.LoadScene("NuevoMenu");
+        if (_gazedAtObject != null && _gazedAtObject.CompareTag("Head"))
+        {
+            if (_attachPoint.transform.childCount == 0) return;
+            Transform _detachObject = _attachPoint.transform.GetChild(0);
 
-        if (_gazedAtObject.CompareTag(interactableTag))
-            _gazedAtObject?.SendMessage("OnPointerClick", null, SendMessageOptions.DontRequireReceiver);
-        if (_gazedAtObject.CompareTag(teleportTag))
-            _gazedAtObject?.SendMessage("OnTeleportClick", null, SendMessageOptions.DontRequireReceiver);
+
+            Material mat = _detachObject.gameObject.GetComponent<Renderer>().material;
+            Renderer renderer = _gazedAtObject.GetComponent<Renderer>();
+            renderer.material = mat;
+            GameObject[] steveParts = GameObject.FindGameObjectsWithTag("Head");
+            this.reach= true;
+            
+            for (int i = 0; i < steveParts.Length; i ++){
+
+                GameObject part = steveParts[i];
+                if (part.name == "hand" || part.name == "leg")
+                {
+
+                    string name = part.GetComponent<Renderer>().material.name;
+                    string s = part.name + "s";
+
+
+                    
+                    if (!comp(name.Substring(0, 4), s))
+                    {
+                        
+                        this.reach = false;
+                        break;
+                       
+                        
+                    }
+                }
+                else {
+                    string name = part.GetComponent<Renderer>().material.name;
+                    string s = part.name;
+                    if (!comp(name.Substring(0, 4), s))
+                    {
+                        this.reach = false;
+                        break;
+                        
+                    }
+                }
+                    
+               
+
+            }
+            print(this.reach);
+            if(this.reach)
+                correct.Play();
+
+        }
 
         // Esta funcionan va a tomar un objeto con el Gaze y lo va a atachar a la mano indicada
         if (_gazedAtObject.CompareTag(grabTag))
@@ -98,6 +159,7 @@ public class CameraPointerManager : MonoBehaviour
             
             _gazedAtObject?.SendMessage("OnGrabRayInteractionDeAttach", null, SendMessageOptions.DontRequireReceiver);
         }
+
     }
 
 
@@ -128,6 +190,7 @@ public class CameraPointerManager : MonoBehaviour
         float x = (startPos).x;
         float y = (startPos).y;
         float z = (startPos).z+6;
+        
         Vector3 endPos = new Vector3(x, y, z);
 
 
@@ -151,11 +214,13 @@ public class CameraPointerManager : MonoBehaviour
             // GameObject detected in front of the camera.
             if (_gazedAtObject != hit.transform.gameObject)
             {
-                _gazedAtObject?.SendMessage("OnPointerExit", null, SendMessageOptions.DontRequireReceiver);
+                
                 _gazedAtObject = hit.transform.gameObject;
-                _gazedAtObject.SendMessage("OnPointerEnter", null, SendMessageOptions.DontRequireReceiver);
+                
                 if (_gazedAtObject.name == "Avatarrr")
                     audioAang.Play();
+                if (hit.transform.CompareTag("Head"))
+                    GazeManager.Instance.StartGazeSelection();
                 if (hit.transform.CompareTag(interactableTag))
                     GazeManager.Instance.StartGazeSelection();
                 if (hit.transform.CompareTag(teleportTag))
@@ -168,25 +233,26 @@ public class CameraPointerManager : MonoBehaviour
 
             }
         }
+
         else
         {
             GazeManager.Instance.CancelGazeSelection();
-            _gazedAtObject?.SendMessage("OnPointerExit", null, SendMessageOptions.DontRequireReceiver);
             audioAang.Stop();
             _gazedAtObject = null;
         }
-        if (_gazedAtObject != null && _gazedAtObject.CompareTag("Board")) {
+        if (_gazedAtObject != null && _gazedAtObject.CompareTag("Board"))
+        {
             if (_attachPoint.transform.childCount == 0) return;
             Transform _detachObject = _attachPoint.transform.GetChild(0);
-            
-            
+
+
             Material mat = _detachObject.gameObject.GetComponent<Renderer>().material;
             Renderer renderer = _gazedAtObject.GetComponent<Renderer>();
-            renderer.material=mat; 
-            
+            renderer.material = mat;
+
         }
-        
-        
+
+
     }
 
 }
