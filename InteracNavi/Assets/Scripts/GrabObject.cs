@@ -11,12 +11,14 @@ public class GrabObject : MonoBehaviour
     [SerializeField] AudioSource wrongAudio;
     [SerializeField] AudioSource correctAudio;
     Dictionary<string, Vector3> myDict = new Dictionary<string, Vector3>();
-
+    
     // Start is called before the first frame update
     private void OnTriggerEnter(Collider other)
     {
         
-        
+
+
+
         if (other.gameObject.tag == "GrabNotGaze")
         {
             if (other.gameObject.name == "air") {
@@ -42,6 +44,7 @@ public class GrabObject : MonoBehaviour
             if(!myDict.ContainsKey(other.gameObject.name))
                 myDict.Add(other.gameObject.name, other.gameObject.transform.position);
             
+
             other.gameObject.GetComponent<Rigidbody>().useGravity = false;
             other.gameObject.GetComponent<Rigidbody>().isKinematic = true;
             other.gameObject.transform.SetParent(_jugador.transform,false);
@@ -56,7 +59,9 @@ public class GrabObject : MonoBehaviour
                 wrongAudio.Play();
                 return;
             }
-            
+            GameObject cam = GameObject.FindGameObjectWithTag("MainCamera");
+            cam?.SendMessage("CountObj", null, SendMessageOptions.DontRequireReceiver);
+
             _objetoGrabed.transform.SetParent(null);
             _objetoGrabed.gameObject.GetComponent<Rigidbody>().useGravity = true;
             _objetoGrabed.gameObject.GetComponent<Rigidbody>().isKinematic = false;
