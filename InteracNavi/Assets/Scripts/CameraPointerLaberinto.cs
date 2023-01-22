@@ -1,13 +1,15 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
-public class CameraPointerManager : MonoBehaviour
+public class CameraPointerLaberinto : MonoBehaviour
 {
     // Start is called before the first frame update
     private const float _maxDistance = 35;
     private GameObject _gazedAtObject = null;
 
     [SerializeField] private GameObject pointer;
-    [SerializeField] AudioSource audioAang;
+    [SerializeField] AudioSource duendeBienvenida;
+    [SerializeField] AudioSource duendeCompletado;
+    [SerializeField] AudioSource hombrePerdido;
     [SerializeField] GameObject objectPiz;
 
     private readonly string interactableTag = "Interactable";
@@ -21,7 +23,7 @@ public class CameraPointerManager : MonoBehaviour
 
     private void Start()
     {
-       
+
 
         int row = 20;
         int col = 10;
@@ -31,10 +33,12 @@ public class CameraPointerManager : MonoBehaviour
         GameObject originalRow = objectPiz;
         GazeManager.Instance.OnGazeSelection += GazeSelection;
 
-        if (objectPiz == null) {
+        if (objectPiz == null)
+        {
             return;
         }
-        for (int k = 0; k < col; k++) {
+        for (int k = 0; k < col; k++)
+        {
             for (int i = 0; i < row; i++)
             {
                 duplicate = Instantiate(original);
@@ -56,23 +60,25 @@ public class CameraPointerManager : MonoBehaviour
             duplicate.transform.position = position;
             original = duplicate;
             originalRow = duplicate;
-               
+
         }
-        
-        
+
+
 
     }
-    private bool comp(string s1, string s2) {
+    private bool comp(string s1, string s2)
+    {
         int i = 0;
-        foreach (char c in s1) {
+        foreach (char c in s1)
+        {
             if (c != s2[i])
             {
-                print(c+"-"+ s2[i]);
+                print(c + "-" + s2[i]);
                 return false;
             }
             i++;
         }
-         return true;
+        return true;
     }
 
     private void GazeSelection()
@@ -80,7 +86,7 @@ public class CameraPointerManager : MonoBehaviour
 
         if (_gazedAtObject.name == "EscenaVR360")
             _gazedAtObject?.SendMessage("CargarVRROOM", null, SendMessageOptions.DontRequireReceiver);
-              
+
         if (_gazedAtObject.name == "AcercaDe")
             _gazedAtObject?.SendMessage("CargarAcercaDe", null, SendMessageOptions.DontRequireReceiver);
 
@@ -107,9 +113,10 @@ public class CameraPointerManager : MonoBehaviour
             Renderer renderer = _gazedAtObject.GetComponent<Renderer>();
             renderer.material = mat;
             GameObject[] steveParts = GameObject.FindGameObjectsWithTag("Head");
-            this.reach= true;
-            
-            for (int i = 0; i < steveParts.Length; i ++){
+            this.reach = true;
+
+            for (int i = 0; i < steveParts.Length; i++)
+            {
 
                 GameObject part = steveParts[i];
                 if (part.name == "hand" || part.name == "leg")
@@ -119,32 +126,33 @@ public class CameraPointerManager : MonoBehaviour
                     string s = part.name + "s";
 
 
-                    
+
                     if (!comp(name.Substring(0, 4), s))
                     {
-                        
+
                         this.reach = false;
                         break;
-                       
-                        
+
+
                     }
                 }
-                else {
+                else
+                {
                     string name = part.GetComponent<Renderer>().material.name;
                     string s = part.name;
                     if (!comp(name.Substring(0, 4), s))
                     {
                         this.reach = false;
                         break;
-                        
+
                     }
                 }
-                    
-               
+
+
 
             }
             print(this.reach);
-            if(this.reach)
+            if (this.reach)
                 correct.Play();
 
         }
@@ -156,7 +164,7 @@ public class CameraPointerManager : MonoBehaviour
         // Esta funcionan va a tomar un objeto y lo va a des-atachar sobre la mesa colisionada
         if (_gazedAtObject.CompareTag(ungrabTag))
         {
-            
+
             _gazedAtObject?.SendMessage("OnGrabRayInteractionDeAttach", null, SendMessageOptions.DontRequireReceiver);
         }
 
@@ -177,20 +185,20 @@ public class CameraPointerManager : MonoBehaviour
 
         // Set the triggerPressed variable to false
 
-        
-        
-          GameObject myObject = thrownObject;
+
+
+        GameObject myObject = thrownObject;
         Rigidbody rigid = thrownObject.GetComponent<Rigidbody>();
 
 
 
-        Vector3 startPos = pos.forward*10;
+        Vector3 startPos = pos.forward * 10;
 
 
         float x = (startPos).x;
         float y = (startPos).y;
-        float z = (startPos).z+6;
-        
+        float z = (startPos).z + 6;
+
         Vector3 endPos = new Vector3(x, y, z);
 
 
@@ -214,11 +222,15 @@ public class CameraPointerManager : MonoBehaviour
             // GameObject detected in front of the camera.
             if (_gazedAtObject != hit.transform.gameObject)
             {
-                
+
                 _gazedAtObject = hit.transform.gameObject;
-                
-                if (_gazedAtObject.name == "Avatarrr")
-                    audioAang.Play();
+
+                if (_gazedAtObject.name == "duente1")
+                    duendeBienvenida.Play();
+                if (_gazedAtObject.name == "duente2")
+                    duendeCompletado.Play();
+                if (_gazedAtObject.name == "perdido")
+                    hombrePerdido.Play();
                 if (hit.transform.CompareTag("Head"))
                     GazeManager.Instance.StartGazeSelection();
                 if (hit.transform.CompareTag(interactableTag))
@@ -229,7 +241,7 @@ public class CameraPointerManager : MonoBehaviour
                     GazeManager.Instance.StartGazeSelection();
                 if (hit.transform.CompareTag(ungrabTag))
                     GazeManager.Instance.StartGazeSelection();
-                
+
 
             }
         }
